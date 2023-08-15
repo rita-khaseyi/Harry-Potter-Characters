@@ -6,6 +6,8 @@ import { getMovies } from "./utilities/utils";
 import Navbar from "./components/Navbar/navbar";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/footer/footer";
+import Link from "next/link";
+
 
 interface Character {
  id: string;
@@ -53,7 +55,9 @@ export default function HomePage() {
     
        <div className="flex flex-wrap justify-center gap-4"> 
          {filteredCharacters.map((item) => (
-           <div key={item.id} className="bg-gray-200 rounded-xl p-6 m-4 w-80 h-140 transition duration-300 shadow-md hover:bg-gray-300 hover:shadow-lg cursor-pointer" style={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }} onClick={() => handleCharacterClick(item)}>
+          
+           <div key={item.id} className="bg-gray-200 rounded-xl p-6 m-4 w-80 h-140 transition duration-300 shadow-md hover:bg-gray-300 hover:shadow-lg cursor-pointer" style={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }} >
+              <Link key={item.id} href={`/components/${item.id}`}>
              <img className="w-60 h-60 object-cover rounded-md mx-auto mb-4" src={item.image} alt={item.name} width="240" height="240" />
              <div className="pt-4 space-y-2 text-gray-700">
              <figcaption>
@@ -65,6 +69,7 @@ export default function HomePage() {
                  </div>
                </figcaption>
              </div>
+             </Link>
            </div>
          ))}
        </div>
