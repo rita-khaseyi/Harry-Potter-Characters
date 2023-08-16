@@ -2,9 +2,12 @@
 // @jsxFrag React.Fragment
 // @ts-nocheck
 "use client";
-import axios from "axios";
+import { getCharacterDetails } from "@/app/utilities/utils";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Navbar from "../Navbar/navbar";
+import Footer from "../footer/footer";
+
 
 type params = {
   params: {
@@ -15,21 +18,10 @@ type params = {
 export default function CharacterDetail({ params: { characterId } }: params) {
   const [character, setCharacter] = useState([]);
 
-  async function getCharacterDetails() {
-    try {
-      const res = await axios.get(
-        `https://hp-api.onrender.com/api/character/${characterId}`
-      );
-      return res.data;
-    } catch (error) {
-      console.error("Error fetching character details:", error);
-      return null;
-    }
-  }
 
   useEffect(() => {
     async function fetchCharacterDetail() {
-      const data = await getCharacterDetails();
+      const data = await getCharacterDetails(characterId);
       if (data) {
         setCharacter(data);
       }
@@ -41,10 +33,15 @@ export default function CharacterDetail({ params: { characterId } }: params) {
     return <div>Loading...</div>;
   }
 
-  const char = character[0]; // Assuming you only get one character
+  const char = character[0]; 
 
   return (
+    <div>
+  
+  <Navbar/>
     <div className="flex justify-center items-center mt-10">
+        
+      
       <div className="bg-gray-100 p-6 rounded-lg shadow-md text-center">
         <Link
           href="/"
@@ -61,7 +58,7 @@ export default function CharacterDetail({ params: { characterId } }: params) {
             />
           ) : (
             <div className="h-72 w-72 flex items-center justify-center bg-gray-200 text-black rounded-md mb-4">
-              No Image Available
+           Image unavailable
             </div>
           )}
         </div>
@@ -83,6 +80,8 @@ export default function CharacterDetail({ params: { characterId } }: params) {
           )}
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 }
